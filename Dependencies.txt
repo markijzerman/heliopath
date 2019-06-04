@@ -1,0 +1,14 @@
+Dependencies
+
+berryIMU (https://github.com/ozzmaker/BerryIMU/tree/master/python-BerryIMU-gryo-accel-compass-filters)
+smbus (https://pypi.org/project/smbus/)
+adafruit_motorkit (https://github.com/adafruit/Adafruit_CircuitPython_MotorKit)
+micropython (https://github.com/micropython/micropython)
+pyliblo (https://github.com/dsacre/pyliblo)
+pyserial (https://github.com/pyserial/pyserial)
+astropy (https://www.astropy.org/)
+pynmea2 (https://github.com/Knio/pynmea2)
+WMM2015 (https://github.com/space-physics/WMM2015)
+
+
+
