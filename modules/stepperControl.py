@@ -45,6 +45,8 @@ class StepperControl:
     stepMode = SINGLE
     target = liblo.Address("172.16.3.191", 8000)
     autorelease = True
+    sourceDelta = 0
+    compMode = False
        
        
        
@@ -100,12 +102,27 @@ class StepperControl:
     def setAutorelease(self, release):
         '''turn autorelease on (True) or off (False). StepperControl will automatically power off the stepper or not'''
         self.autorelease = release
+
+    def setSourceDelta(self, deltaVal):
+        '''set the delta angle of the light source for the mirror to compensate for its movement'''
+        self.sourceDelta = deltaVal
+
+    def setSourceCompensation(self, mode):
+        self.compMode = mode
         
         
     def run(self):
         '''the StepperControl loop'''
         while(True):
-            angleDifference = self.angle - self.motorPos
+            if(compMode):
+                '''compensate for source movement.
+                conditions: source is higher than reflection 
+                reflections light up shadows from the source
+                in the case of the sun: mirror is aimed towards the southern side of the sky able to send sunlight into shadow
+                '''
+                angleDifference = (self.angle + (0.5 * self.sourceDelta)) - self.motorPos
+            else:
+                angleDifference = self.angle - self.motorPos
 
             if(angleDifference > 0.0):
                 self.stepDir = self.FORWARD

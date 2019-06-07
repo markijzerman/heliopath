@@ -1,4 +1,11 @@
-#this file gets the current position of the sun, the heading of the mirrorbase and turns the mirror towards it
+'''this script gets the current position of the sun, the heading of the mirrorbase and turns the mirror towards it, 
+then it will track the position of the sun by updating periodically according to it's interval arguement (optional argument, it defaults to 60s)
+NOTE: It will keep the mirror aimed at the sun.
+By calling this script with the --heading option the user can bypass the compass reading and supply a custom heading.
+This can be useful in case where the compass doesn't give an accurate reading.
+
+
+'''
 
 import MirrorGPS
 import liblo
@@ -13,8 +20,10 @@ import wmm2015 as wmm
 
 
 parser = argparse.ArgumentParser(description="Fruitstepper stepper control")
-parser.add_argument('--heading', metavar="port", type=int, nargs=1, default=[None], required=False, help="port for receiving osc messages")
+parser.add_argument('--heading', metavar="heading", type=int, nargs=1, default=[None], required=False, help="heading of the sun tracker, 0 is due north")
+parser.add_argument('--interval', metavar="interval", type=int, narg=1, default=[60], required=False, help="interval in seconds between sun position updates")
 argHeading = parser.parse_args().heading[0]
+trackingInterval = parser.parse_args().interval[0]
 
 
 #max age of astropy data in days
@@ -76,3 +85,21 @@ liblo.send(motionCtrlAddress, "/angleYaw", sunaz - 180, 1)
 t.sleep(0.5)
 liblo.send(motionCtrlAddress,"/anglePitch", sunalt * -1, 1)
 liblo.send(motionCtrlAddress, "/autoreleasePitch", 0)
+t.sleep(trackingInterval)
+
+while(True):
+    #update the current time after the interval
+    gps = MirrorGPS.getGPSinfo()
+    time = gps[1]
+    suntime = Time(date + " " + time)
+    #get new sun position
+    sunPos = get_sun(suntime)
+    #convert to altaz system
+    altaz = sunPos.transform_to(AltAz(obstime=suntime, location=location))
+    sunalt = 90 - altaz.alt.deg
+    sunaz = altaz.az.deg
+    #send new position to fruitstepper4.py
+    liblo.send(motionCtrlAddress, "/angleYaw", sunaz - 180, 1)
+    liblo.send(motionCtrlAddress,"/anglePitch", sunalt * -1, 1)
+    t.sleep(trackingInterval)
+

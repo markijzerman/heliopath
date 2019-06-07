@@ -137,6 +137,13 @@ def releasePitch_cb(path, args, types):
     elif(args[0] == 0):
         stepperPitch.setAutorelease(False)
 
+def deltaYaw_cb(path, args, types):
+    '''set the delta angle of the light source for the mirror to compensate for its movement'''
+    stepperYaw.setSourceDelta(args[0])
+
+def deltaPitch_cb(path, args, types):
+    '''set the delta angle of the light source for the mirror to compensate for its movement'''
+    stepperPitch.setSourceDelta(args[0])
  
 def fallback_cb(path, args, types, src):
     '''a callback to let the user know the program doesn't understand the messeage it received   '''
@@ -160,6 +167,8 @@ st.add_method('/zeroYaw', None, zeroYaw_cb)
 st.add_method('/zeroPitch', None, zeroPitch_cb)
 st.add_method('/autoreleaseYaw', 'i', releaseYaw_cb)
 st.add_method('/autoreleasePitch', 'i', releasePitch_cb) 
+st.add_method('/sourceDeltaYaw', 'f', deltaYaw_cb)
+st.add_method('/sourceDeltaPitch', 'f', deltaPitch_cb)
 st.add_method(None, None, fallback_cb)
 
 
