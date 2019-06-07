@@ -17,8 +17,10 @@ This can be useful in case where the compass doesn't give an accurate reading.
 import MirrorGPS
 import liblo
 from astropy.coordinates import SkyCoord, EarthLocation, AltAz, get_sun
-from astropy.time import Time
+
+from astropy.time import Time 
 import astropy.units as u
+
 from astropy.utils import iers
 import time as t
 import argparse
@@ -100,7 +102,7 @@ t.sleep(10)
 
 #set the sun position as zero
 liblo.send(motionCtrlAddress, "/zeroYaw", 1)
-liblo.send(motionCtrlAddress, "zeroPitch", 1)
+liblo.send(motionCtrlAddress, "/zeroPitch", 1)
 print("Heliopath ready for user control")
 
 t.sleep(trackingInterval)

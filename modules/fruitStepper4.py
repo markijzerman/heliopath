@@ -60,7 +60,7 @@ port = parser.parse_args().port[0]
 
 
 #rudimentary ctrl-c catch to release the steppers when quiting
-def userCancel:
+def userCancel():
     stepperYaw.stepperRelease()
     stepperPitch.stepperRelease()
     sys.exit(130) # 130 is standard exit code for ctrl-c
@@ -156,7 +156,7 @@ def fallback_cb(path, args, types, src):
 
 #hook all callbacks into the liblo server
 st.add_method('/angleYaw', 'ff', angleYaw_cb)
-st.add_method('/agnleYaw', 'fi' angleYaw_cb)
+st.add_method('/angleYaw', 'fi', angleYaw_cb)
 st.add_method('/anglePitch', 'ff', anglePitch_cb)
 st.add_method('/anglePitch', 'fi', anglePitch_cb)
 st.add_method('/setMaxYaw', None, setMaxYaw_cb)
