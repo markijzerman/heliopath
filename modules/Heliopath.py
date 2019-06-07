@@ -17,8 +17,7 @@ This can be useful in case where the compass doesn't give an accurate reading.
 import MirrorGPS
 import liblo
 from astropy.coordinates import SkyCoord, EarthLocation, AltAz, get_sun
-from astropy.time import Time
-import astropy.units as 
+from astropy.time import Time 
 from astropy.utils import iers
 import time as t
 import argparse
@@ -28,7 +27,7 @@ import wmm2015 as wmm
 
 parser = argparse.ArgumentParser(description="Fruitstepper stepper control")
 parser.add_argument('--heading', metavar="heading", type=int, nargs=1, default=[None], required=False, help="heading of the sun tracker, 0 is due north")
-parser.add_argument('--interval', metavar="interval", type=int, narg=1, default=[60], required=False, help="interval in seconds between sun position updates")
+parser.add_argument('--interval', metavar="interval", type=int, nargs=1, default=[60], required=False, help="interval in seconds between sun position updates")
 argHeading = parser.parse_args().heading[0]
 trackingInterval = parser.parse_args().interval[0]
 

@@ -114,7 +114,7 @@ class StepperControl:
     def run(self):
         '''the StepperControl loop'''
         while(True):
-            if(compMode):
+            if(self.compMode):
                 '''compensate for source movement.
                 conditions: source is higher than reflection 
                 reflections light up shadows from the source
