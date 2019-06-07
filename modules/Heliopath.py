@@ -1,4 +1,5 @@
 '''this script gets the current position of the sun, the heading of the mirrorbase and turns the mirror towards it.
+Please wait untill the mirror is aimed at the sun and the script has posted "Heliopath ready for user control"
 It will track the position of the sun by updating periodically according to it's interval arguement (optional argument, it defaults to 60s)
 It will send the relative movement of the sun to the fruitStepper program so that it can use this for heliostatic movement.
 
