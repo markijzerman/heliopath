@@ -99,7 +99,7 @@ t.sleep(10)
 
 #set the sun position as zero
 liblo.send(motionCtrlAddress, "/zeroYaw", 1)
-liblo.send(motionCtrlAddress, "zeroPitch", 1)
+liblo.send(motionCtrlAddress, "/zeroPitch", 1)
 print("Heliopath ready for user control")
 
 t.sleep(trackingInterval)
