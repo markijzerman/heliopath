@@ -55,11 +55,14 @@ stepperPitch.stepperRelease()
 #parse the CLI arguments
 parser = argparse.ArgumentParser(description="Fruitstepper stepper control")
 parser.add_argument('--port', metavar="port", type=int, nargs=1, default=[8000], required=False, help="port for receiving osc messages")
+parser.add_argument('--srcCmp', metavar="srcCmp", type=bool, nargs=1, default=[False], required=False, help="turn source movement compensation on/off")
 port = parser.parse_args().port[0]
+stepperYaw.setSourceCompensation(parses.parse_args().srcCmp[0])
+stepperPitch.setSourceCompensation(parser.parse_args().srcCmp[0])
 #print(port)
 
 
-#rudimentary ctrl-c catch to release the steppers when quiting
+#rudimentary ctrl-c catch to release the steppers when quitin
 def userCancel():
     stepperYaw.stepperRelease()
     stepperPitch.stepperRelease()
